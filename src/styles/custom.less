@@ -1,0 +1,93 @@
+// header fix
+.app-icons {
+    text-align: center;
+    .ant-col-8, .ant-col-12 {
+        padding: (@layout-gutter * 2) 0;
+        border-radius: 4px;
+        text-align: center;
+        transition: background-color 300ms;
+        cursor: pointer;
+        &:hover {
+            background-color: #ececec;
+        }
+    }
+    .app-icon {
+        min-width: @layout-gutter * 10;
+    }
+}
+
+.header-nav {
+    .ant-menu {
+        background: transparent;
+        border-bottom: none;
+        > li {
+            border-bottom: none;
+            color: #fff;
+            &:hover {
+                border-bottom: none;
+                background: rgba(255, 255, 255, 0.2);
+                color: #fff;
+            }
+            &:focus {
+                outline: none;
+                border-bottom: none;
+            }
+        }
+        .ant-menu-item-selected {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+.ant-list-item-action {
+    margin-left: 15px !important;
+}
+
+// fix table load内容抖动
+.ant-spin-blur {
+    filter: none !important;
+}
+
+.header-icon {
+    display: none;
+}
+
+.ant-input[type=textarea]{
+    resize: none;
+}
+
+@media (max-width: @screen-sm) {
+    .header-icon {
+        display: block;
+    }
+}
+
+.push-create-task {
+    .ant-card-head {
+        min-height: 40px;
+    }
+    .ant-card-head-title {
+        padding: 9px 0;
+    }
+    .ant-card-body {
+        padding: 15px;
+    }
+}
+.ant-btn {
+    a {
+        color: rgba(0, 0, 0, 0.65);
+        font-weight: 400;
+    }
+}
+.required-icon {
+    display: inline-block;
+    margin-right: 4px;
+    content: "*";
+    font-family: SimSun;
+    line-height: 1;
+    font-size: 12px;
+    color: #f04134;
+}
+
+.table-padding {
+    padding: 10px;
+}

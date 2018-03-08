@@ -1,0 +1,48 @@
+<div class="logo">
+    <a [routerLink]="['/']">
+        <img class="expanded" src="./assets/img/mfw-logo-white@2x.png" alt="{{settings.app.name}}" style="max-height:40px;" />
+        <img class="collapsed" src="./assets/img/logo_gonglve_v6.png" alt="{{settings.app.name}}" style="max-height:30px;" />
+    </a>
+</div>
+<div class="top-nav-wrap">
+    <ul class="top-nav">
+         <!--Menu -->
+        <li>
+            <div class="item" (click)="toggleCollapsedSideabar()">
+                <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+            </div>
+        </li>
+    </ul>
+    <!--<header-search class="header-search" [toggleChange]="searchToggleStatus"></header-search>-->
+    <ul class="top-nav">
+        <!-- Settings -->
+        <li class="hidden-xs">
+            <nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
+                <div class="item" nz-dropdown>
+                    <i class="anticon anticon-setting"></i>
+                </div>
+                <div nz-menu style="width:200px">
+                    <div nz-menu-item class="theme-switch">
+                        <header-theme></header-theme>
+                    </div>
+                    <div nz-menu-item>
+                        <header-fullscreen></header-fullscreen>
+                    </div>
+                    <!--<div nz-menu-item>-->
+                    <!--<header-storage></header-storage>-->
+                    <!--</div>-->
+                    <!--<div nz-menu-item>-->
+                    <!--<header-langs></header-langs>-->
+                    <!--</div>-->
+                </div>
+            </nz-dropdown>
+        </li>
+
+        <li >
+            <header-icon></header-icon>
+        </li>
+        <li class="hidden-xs">
+            <header-user></header-user>
+        </li>
+    </ul>
+</div>

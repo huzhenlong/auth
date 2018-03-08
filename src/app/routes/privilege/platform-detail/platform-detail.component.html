@@ -1,0 +1,53 @@
+<div>
+    <div class="table-padding"></div>
+    <tree #treeFFS
+          [tree]="ffs"
+          (nodeRemoved)="onNodeRemoved($event)"
+          (nodeRenamed)="onNodeRenamed($event)"
+          (nodeCreated)="onNodeFFSCreated($event)"
+          (menuItemSelected)="setPath($event)"
+          [settings]="settings">
+    </tree>
+
+    <nz-modal [nzVisible]="isVisible" style="position: absolute;right: 0;" [nzTitle]="'权限'"
+              [nzContent]="temContent" [nzFooter]="false"
+              (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    </nz-modal>
+    <ng-template #temContent>
+        <form nz-form [formGroup]="form">
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label>资源路径</label>
+                </div>
+                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                    <nz-input [nzId]="'path'" name="path" [(ngModel)]="plat.path" [formControlName]="'path'">
+                        <ng-template #addOnBefore>
+                            <nz-tooltip [nzTitle]="pathPrefix" style="display: inline-block">
+                                <span nz-tooltip>{{pathPrefix}}</span>
+                            </nz-tooltip>
+                        </ng-template>
+                    </nz-input>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label>操作</label>
+                </div>
+                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                    <nz-select [nzPlaceHolder]="'请选择操作'" [(ngModel)]="plat.operations" name="operations"
+                               [nzShowSearch]="true" [nzSize]="'large'" [nzMultiple]="true" [formControlName]="'operations'">
+                        <nz-option *ngFor="let option of opeList;" [nzLabel]="option.name"
+                                   [nzValue]="option.id"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+            <div nz-form-item nz-row style="text-align: right;margin-bottom: 6px;">
+                <button nz-button [type]="'submit'" nzType="primary" [disabled]="!form.valid"
+                        (click)="handleOk()">确定</button>
+                <button nz-button (click)="handleCancel()">
+                    取消
+                </button>
+            </div>
+        </form>
+    </ng-template>
+</div>

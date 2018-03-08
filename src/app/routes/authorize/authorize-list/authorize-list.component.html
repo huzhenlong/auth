@@ -1,0 +1,141 @@
+<div>
+    <div class="table-padding"></div>
+    <nz-card [nzBordered]="false">
+
+        <div nz-row>
+            <div nz-col [nzSm]="16" [nzXs]="24">
+                <div class="d-flex align-items-center mb-lg">
+                    <h3 class="text-lg">资源🌲 </h3>
+                    <div style="margin-left: 8px">
+                        <label for="plat">平台：</label>
+                        <nz-select name="plat" nzId="plat" style="width: 120px;"
+                                   [nzPlaceHolder]="'请选择平台'" (ngModelChange)="changePlat($event)"
+                                   [nzShowSearch]="true" [(ngModel)]="selPlat">
+                            <nz-option *ngFor="let i of platList;" [nzLabel]="i.name"
+                                       [nzValue]="i.id"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <tree #treeFFS
+                      [tree]="ffs"
+                      (nodeSelected)="treeNodeSel($event)"
+                      [settings]="settings">
+                </tree>
+            </div>
+            <div nz-col [nzSm]="8" [nzXs]="24" style="padding-left: 6px">
+                <div class="d-flex align-items-center mb-lg">
+                    <h3 class="flex-1 text-lg">权限列表</h3>
+                    <div>
+                        <nz-dropdown [nzPlacement]="'bottomLeft'">
+                            <button nz-button nz-dropdown class="ml-sm">
+                                批量操作 <i class="anticon anticon-down"></i>
+                            </button>
+                            <ul nz-menu>
+                                <li nz-menu-item (click)="accredit()">授权</li>
+                            </ul>
+                        </nz-dropdown>
+                    </div>
+                </div>
+                <nz-table #nzTable [nzDataSource]="tableData" [nzPageSize]="10"
+                          (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()"
+                          (nzPageSizeChange)="_refreshStatus()">
+                    <thead nz-thead>
+                    <tr>
+                        <th nz-th nzCheckbox>
+                            <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate"
+                                   (ngModelChange)="_checkAll($event)">
+                            </label>
+                        </th>
+                        <th nz-th><span>资源</span></th>
+                        <th nz-th><span>操作</span></th>
+                    </tr>
+                    </thead>
+                    <tbody nz-tbody>
+                    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+                        <td nz-td nzCheckbox>
+                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
+                            </label>
+                        </td>
+                        <td nz-td>{{data.path}}</td>
+                        <td nz-td>{{data.operation}}</td>
+                    </tr>
+                    </tbody>
+                </nz-table>
+
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <nz-table #nzTable [nzDataSource]="userAuthData" [nzPageSize]="20" [nzScroll]="{y: 240 }">
+                    <ng-template #nzFixedHeader>
+                        <thead nz-thead>
+                        <tr>
+                            <th nz-th [nzWidth]="'20%'"><span>用户</span>
+                                <nz-dropdown [nzTrigger]="'click'" [nzClickHide]="false">
+                                    <i class="anticon anticon-user" nz-dropdown></i>
+                                    <div nz-dropdown-custom class="custom-filter-dropdown">
+                                        <nz-input [nzPlaceHolder]="'请输入用户'" [(ngModel)]="userId"
+                                                  style="width: 150px"
+                                                  (ngModelChange)="userAuthSearch(userId)"></nz-input>
+                                    </div>
+                                </nz-dropdown>
+                            </th>
+                            <th nz-th [nzWidth]="'15%'"><span>平台</span>
+                                <nz-dropdown [nzTrigger]="'click'">
+                                    <i class="anticon anticon-filter" nz-dropdown></i>
+                                    <ul nz-menu>
+                                        <li nz-menu-item *ngFor="let i of platList"
+                                            (click)="userAuthSearch(userId,i.id)">
+                                            <label><span>{{i.name}}</span></label>
+                                        </li>
+                                    </ul>
+                                </nz-dropdown>
+                            </th>
+                            <th nz-th [nzWidth]="'40%'"><span>资源</span></th>
+                            <th nz-th [nzWidth]="'15%'"><span>操作</span></th>
+                            <th nz-th [nzWidth]="'10%'"><span>功能</span></th>
+                        </tr>
+                        </thead>
+                    </ng-template>
+                    <tbody nz-tbody>
+                    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+                        <td nz-td>{{data.userId}}</td>
+                        <td nz-td>{{data.plat}}</td>
+                        <td nz-td>{{data.res}}</td>
+                        <td nz-td>{{data.ope}}</td>
+                        <td nz-td>
+                            <nz-popconfirm [nzTitle]="'是否删除？'" [nzOkText]="'确定'" [nzCancelText]="'取消'"
+                                           (nzOnConfirm)="delAuth(data)"
+                                           (nzOnCancel)="cancel()">
+                                <a nz-popconfirm style="color: #d9534f;">删除</a>
+                            </nz-popconfirm>
+                        </td>
+                    </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+    </nz-card>
+</div>
+
+<nz-modal [nzVisible]="isVisible" style="position: absolute;right: 0;" [nzTitle]="'授权'"
+          [nzContent]="temContent"
+          (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+</nz-modal>
+<ng-template #temContent>
+    <form nz-form>
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                <label>用户</label>
+            </div>
+            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                <nz-input name="uid" [(ngModel)]="uid"></nz-input>
+                <!--<nz-select [nzPlaceHolder]="'请选择用户'" [nzMultiple]="true"
+                           [nzShowSearch]="true" [nzSize]="'large'">
+                    <nz-option *ngFor="let option of userList;" [nzLabel]="option.name"
+                               [nzValue]="option.value"></nz-option>
+                </nz-select>-->
+            </div>
+        </div>
+    </form>
+</ng-template>
