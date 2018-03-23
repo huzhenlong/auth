@@ -12,9 +12,7 @@ const OPERATION = [{
                     "text": "平台列表",
                     "translate": "平台列表",
                     "link": "/privilege/platform-list",
-                    "children": [
-
-                    ]
+                    "children": []
                 },
                 /*{
                     "text": "平台详情",
@@ -41,13 +39,16 @@ const OPERATION = [{
             "link": "/authorize/authorize-list",
             "children": [
                 {
-                    "text": "权限列表",
-                    "translate": "权限列表",
+                    "text": "授权",
+                    "translate": "授权",
                     "link": "/authorize/authorize-list",
-                    "children": [
-
-                    ]
-                },
+                    "children": []
+                }, {
+                    "text": "权限查询",
+                    "translate": "权限查询",
+                    "link": "/authorize/authorize-search",
+                    "children": []
+                }
             ]
         }
     ]

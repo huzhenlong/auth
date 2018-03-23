@@ -1,7 +1,6 @@
 <div>
     <div class="table-padding"></div>
     <nz-card [nzBordered]="false">
-
         <div nz-row>
             <div nz-col [nzSm]="16" [nzXs]="24">
                 <div class="d-flex align-items-center mb-lg">
@@ -36,7 +35,7 @@
                         </nz-dropdown>
                     </div>
                 </div>
-                <nz-table #nzTable [nzDataSource]="tableData" [nzPageSize]="10"
+                <nz-table #nzTable1 [nzDataSource]="tableData" [nzPageSize]="10"
                           (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()"
                           (nzPageSizeChange)="_refreshStatus()">
                     <thead nz-thead>
@@ -51,65 +50,13 @@
                     </tr>
                     </thead>
                     <tbody nz-tbody>
-                    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+                    <tr nz-tbody-tr *ngFor="let data of nzTable1.data">
                         <td nz-td nzCheckbox>
                             <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
                             </label>
                         </td>
                         <td nz-td>{{data.path}}</td>
                         <td nz-td>{{data.operation}}</td>
-                    </tr>
-                    </tbody>
-                </nz-table>
-
-            </div>
-        </div>
-        <div nz-row>
-            <div nz-col [nzSpan]="24">
-                <nz-table #nzTable [nzDataSource]="userAuthData" [nzPageSize]="20" [nzScroll]="{y: 240 }">
-                    <ng-template #nzFixedHeader>
-                        <thead nz-thead>
-                        <tr>
-                            <th nz-th [nzWidth]="'20%'"><span>用户</span>
-                                <nz-dropdown [nzTrigger]="'click'" [nzClickHide]="false">
-                                    <i class="anticon anticon-user" nz-dropdown></i>
-                                    <div nz-dropdown-custom class="custom-filter-dropdown">
-                                        <nz-input [nzPlaceHolder]="'请输入用户'" [(ngModel)]="userId"
-                                                  style="width: 150px"
-                                                  (ngModelChange)="userAuthSearch(userId)"></nz-input>
-                                    </div>
-                                </nz-dropdown>
-                            </th>
-                            <th nz-th [nzWidth]="'15%'"><span>平台</span>
-                                <nz-dropdown [nzTrigger]="'click'">
-                                    <i class="anticon anticon-filter" nz-dropdown></i>
-                                    <ul nz-menu>
-                                        <li nz-menu-item *ngFor="let i of platList"
-                                            (click)="userAuthSearch(userId,i.id)">
-                                            <label><span>{{i.name}}</span></label>
-                                        </li>
-                                    </ul>
-                                </nz-dropdown>
-                            </th>
-                            <th nz-th [nzWidth]="'40%'"><span>资源</span></th>
-                            <th nz-th [nzWidth]="'15%'"><span>操作</span></th>
-                            <th nz-th [nzWidth]="'10%'"><span>功能</span></th>
-                        </tr>
-                        </thead>
-                    </ng-template>
-                    <tbody nz-tbody>
-                    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
-                        <td nz-td>{{data.userId}}</td>
-                        <td nz-td>{{data.plat}}</td>
-                        <td nz-td>{{data.res}}</td>
-                        <td nz-td>{{data.ope}}</td>
-                        <td nz-td>
-                            <nz-popconfirm [nzTitle]="'是否删除？'" [nzOkText]="'确定'" [nzCancelText]="'取消'"
-                                           (nzOnConfirm)="delAuth(data)"
-                                           (nzOnCancel)="cancel()">
-                                <a nz-popconfirm style="color: #d9534f;">删除</a>
-                            </nz-popconfirm>
-                        </td>
                     </tr>
                     </tbody>
                 </nz-table>

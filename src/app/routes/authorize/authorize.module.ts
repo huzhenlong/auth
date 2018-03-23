@@ -8,14 +8,16 @@ import { AuthorizeListComponent } from "./authorize-list/authorize-list.componen
 // service
 import { CommonService } from "@core/services/common.service";
 
-import { AuthorizeListService } from "./authorize-list/authorize-list.service";
 import {CommonMessage} from "@core/services/common-message.service";
+import { AuthorizeSearchComponent } from './authorize-search/authorize-search.component';
+import { AuthorizeApiService } from './api.service';
 
 
 const routes
     : Routes = [
     {path: '', redirectTo: 'authorize-list'},
     {path: 'authorize-list', component: AuthorizeListComponent},
+    {path: 'authorize-search', component: AuthorizeSearchComponent},
 ];
 
 @NgModule({
@@ -25,11 +27,12 @@ const routes
     ],
     declarations: [
         AuthorizeListComponent,
+        AuthorizeSearchComponent,
     ],
     providers: [
+        AuthorizeApiService,
         CommonService,
-        AuthorizeListService,
-        CommonMessage
+        CommonMessage,
     ],
     exports: [RouterModule]
 })

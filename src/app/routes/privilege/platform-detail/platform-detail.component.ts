@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {Router, ActivatedRoute} from "@angular/router";
-import {NzMessageService} from "ng-zorro-antd";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { NzMessageService } from "ng-zorro-antd";
 
-import {PlatformDetailService} from "./platform-detail.service";
-import {MenuItemSelectedEvent, Ng2TreeSettings, NodeEvent, NodeMenuItemAction, TreeModel} from "ng2-tree";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CommonMessage} from "@core/services/common-message.service";
+import { PlatformDetailService } from "./platform-detail.service";
+import { MenuItemSelectedEvent, Ng2TreeSettings, NodeEvent, NodeMenuItemAction, TreeModel } from "ng2-tree";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CommonMessage } from "@core/services/common-message.service";
 
 @Component({
     templateUrl: './platform-detail.component.html',
@@ -95,6 +95,7 @@ export class PlatformDetailComponent implements OnInit {
 
     onNodeRemoved(e: NodeEvent): void {
         this.curNode = e.node;
+        if (!e.node.value || !this.curNode.node['data-id']) return;
         this.ds.deleteAuth(this.curNode.node['data-id']).then(data => {
             if (this.cm.checkCode(data)) {
                 this.cm.createMessage('success', '删除成功');
@@ -139,8 +140,9 @@ export class PlatformDetailComponent implements OnInit {
             return nodeParent.node['id'];
         }
     }
+
     getNodeId() {
-       return this.curNode.id;
+        return this.curNode.id;
     }
 
 
@@ -197,16 +199,16 @@ export class PlatformDetailComponent implements OnInit {
             controller.remove();
         }
         return false;
-    };
+    }
 
     showModal = () => {
         this.isVisible = true;
-    };
+    }
 
     hideModal = () => {
         this.isVisible = false;
         this.resetModal();
-    };
+    }
 
     resetModal() {
         this.form.reset();

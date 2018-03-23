@@ -11,7 +11,7 @@
     "scripts": {
         "precommit": "npm run lint-staged",
         "ng": "ng",
-        "start": "ng serve -o",
+        "start": "ng serve -o --host 0.0.0.0 --proxy-config proxy.conf.js",
         "start-jmz": "ng serve -o --proxy-config proxy.conf.js https://admin.jmz.dev",
         "start-hzl": "ng serve -p 4222 -o --proxy-config proxy.conf.js https://admin.huzhenlong.ab",
         "start-zdx": "ng serve -o --proxy-config proxy.conf.js https://admin.zdx.dev",

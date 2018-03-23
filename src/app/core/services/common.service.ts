@@ -115,8 +115,8 @@ export class CommonService {
             .catch(CommonService.handleError);
     }
 
-    deleteJson(url: string): Promise<any> {
-        return this.http.delete(url)
+    deleteJson(url: string, data?: any): Promise<any> {
+        return this.http.delete(url, data)
             .toPromise()
             .then(CommonService.extractJson)
             .catch(CommonService.handleError);
@@ -151,14 +151,12 @@ export class CommonService {
     }
 
 
-
     putJson(url: string, data: any): Promise<any> {
         return this.http.put(url, data)
             .toPromise()
             .then(CommonService.extractJson)
             .catch(CommonService.handleError);
     }
-
 
 
     postForm(url, data) {

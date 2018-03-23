@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {Router, ActivatedRoute, NavigationExtras} from "@angular/router";
-import {NzMessageService} from "ng-zorro-antd";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
+import { NzMessageService } from "ng-zorro-antd";
 
-import {AuthorizeListService} from "./authorize-list.service";
-import {Ng2TreeSettings, NodeMenuItemAction, TreeModel} from "ng2-tree";
-import {PrivilegeListService} from "../../privilege/privilege-list/privilege-list.service";
-import {CommonMessage} from "@core/services/common-message.service";
-import {isArray} from "util";
-import {FormGroup} from "@angular/forms";
+import { Ng2TreeSettings, NodeMenuItemAction, TreeModel } from "ng2-tree";
+import { PrivilegeListService } from "../../privilege/privilege-list/privilege-list.service";
+import { CommonMessage } from "@core/services/common-message.service";
+import { isArray } from "util";
+import { FormGroup } from "@angular/forms";
+import { AuthorizeApiService } from '../api.service';
 
 @Component({
     templateUrl: './authorize-list.component.html',
@@ -22,7 +22,6 @@ export class AuthorizeListComponent implements OnInit {
         showCheckboxes: false
     };
     @ViewChild('treeFFS') public treeFFS;
-
     tableData: any[] = [];
     userAuthData: any[] = [];
     platList = [];
@@ -63,7 +62,7 @@ export class AuthorizeListComponent implements OnInit {
         this._refreshStatus();
     }
 
-    constructor(private cm: CommonMessage, private as: AuthorizeListService, private router: Router) {
+    constructor(private cm: CommonMessage, private as: AuthorizeApiService, private router: Router) {
     }
 
     ngOnInit() {
@@ -86,15 +85,15 @@ export class AuthorizeListComponent implements OnInit {
         this.resetModal();
         this.isVisible = false;
         return false;
-    };
+    }
 
     showModal = () => {
         this.isVisible = true;
-    };
+    }
 
     hideModal = () => {
         this.isVisible = false;
-    };
+    }
 
     resetModal() {
         this.uid = '';
@@ -120,6 +119,9 @@ export class AuthorizeListComponent implements OnInit {
 
     changePlat(id) {
         this.platList.forEach(plat => {
+            if (plat.content === '') {
+                this.cm.createMessage('info', '该平台暂无权限');
+            }
             if (plat.id === id) {
                 const content = JSON.parse(plat.content);
                 content['settings']['rightMenu'] = false;
@@ -154,15 +156,6 @@ export class AuthorizeListComponent implements OnInit {
 
     cancel = function () {
     };
-
-
-    delAuth(curData) {
-
-    }
-
-    userAuthSearch(userId?: any, platId?: any) {
-
-    }
 
 
 }
